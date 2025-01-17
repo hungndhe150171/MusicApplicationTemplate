@@ -1,13 +1,13 @@
 use MUSTIFY
 
-create table ACCOUNT_TYPE(
-accType_id int primary key identity,
+create table User_type(
+type_id int primary key identity,
 type_name varchar(30) not null,
 description nvarchar(300),
 )
 
-create table ACCOUNT(
-account_id int primary key identity,
+create table Users(
+user_id int primary key identity,
 username varchar(20) not null,
 password varchar(20) not null,
 first_name nvarchar(30) not null,
@@ -17,8 +17,45 @@ phone varchar(13),
 email varchar(30),
 address nvarchar(150) not null,
 join_date datetime default getdate(),
-account_type int foreign key references ACCOUNT_TYPE(accType_id),
+account_type int foreign key references User_type(type_id),
 is_active bit default 0,
 )
 
-drop table account
+create table Songs(
+song_id int primary key identity,
+title nvarchar(255) not null,
+artist nvarchar(255) not null,
+album nvarchar(255),
+duration int not null,
+file_path varchar(MAX) not null,
+created_date datetime default getdate(),
+)
+
+create table Playlists(
+playlist_id int primary key identity,
+playlist_name nvarchar(255),
+user_id int foreign key references Users(user_id),
+created_date datetime default getdate(),
+)
+
+create table Playlist_songs(
+id int primary key identity,
+playlist_id int foreign key references Playlists(playlist_id),
+song_id int foreign key references Songs(song_id),
+)
+
+create table Likes(
+like_id int primary key identity,
+user_id int foreign key references Users(user_id),
+song_id int foreign key references Songs(song_id),
+created_date datetime default getdate(),
+)
+
+create table Recently_played(
+id int primary key identity,
+user_id int foreign key references Users(user_id),
+song_id int foreign key references Songs(song_id),
+played_at datetime default getdate(),
+)
+
+
