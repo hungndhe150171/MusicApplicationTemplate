@@ -42,13 +42,19 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         holder.tvSongTitle.setText(songs.get(position).getTitle());
         holder.tvSongArtist.setText(songs.get(position).getArtist());
 
-        String imageName = songs.get(position).getImage(); // ví dụ: "bau_troi_moi.jpg"
-        // Chuyển đổi tên file thành resource ID từ drawable
-        int resourceId = context.getResources().getIdentifier(imageName.split("\\.")[0], "drawable", context.getPackageName());
+        int imageResourceId = context.getResources().getIdentifier(songs.get(position).getImage().split("\\.")[0], "drawable", context.getPackageName());
         Glide.with(context)
-                .load(resourceId)  // sử dụng resource ID
+                .load(imageResourceId)
                 .apply(new RequestOptions().placeholder(R.drawable.placecholder_image))
                 .into(holder.ivSongImage);
+
+//        String imageName = songs.get(position).getImage(); // ví dụ: "bau_troi_moi.jpg"
+//        // Chuyển đổi tên file thành resource ID từ drawable
+//        int resourceId = context.getResources().getIdentifier(imageName.split("\\.")[0], "drawable", context.getPackageName());
+//        Glide.with(context)
+//                .load(resourceId)  // sử dụng resource ID
+//                .apply(new RequestOptions().placeholder(R.drawable.placecholder_image))
+//                .into(holder.ivSongImage);
     }
 
     @Override
